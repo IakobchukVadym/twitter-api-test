@@ -1,57 +1,38 @@
 package com.twitter.tests;
 
-import io.restassured.http.Cookies;
-import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
-
-import java.util.ArrayList;
-
-import java.util.Map;
-
+import static Common.CommonMethods.getRandInt;
 import static io.restassured.RestAssured.given;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.equalTo;
 
 public class TestStatuses extends BaseTest {
 
+    //Generate random number of twits to return in test
+    int numberOfTwits = getRandInt(1,10);
 
     @Test
-    public void verifyLastTwit(){
-
-        Response response =
+    public void verifyTwits(){
         given().
-                auth().
-                oauth(consumerKey,consumerSecret,accessToken,accessSecret).
-                param("count", 5).
+                log().params().
+                spec(oauth1).
+                param("count", numberOfTwits).
                 when().
                 get("/statuses/home_timeline.json").
                 then().
-                log().all().
+                log().ifValidationFails().
                 statusCode(200).
-                time(lessThan(1500L), MILLISECONDS).
-                extract().response();
-
-        ArrayList<String > s = response.path("entities.user_mentions.screen_name");
-        System.out.println(s);
-        String contentType = response.header("content-type");
-        System.out.println("Content type of response is " + contentType);
-        Map<String, String> allCookies = response.getCookies();
-        Cookies detailedCookies = response.getDetailedCookies();
-        //System.out.println(Arrays.asList(allCookies));
-        System.out.println("Detailed coockies are " + detailedCookies);
+                body("id.size()", equalTo(numberOfTwits));
     }
-
     @Test
     public void veifyResponseTime(){
         given().
                 log().params().
-                auth().
-                oauth(consumerKey,consumerSecret,accessToken,accessSecret).
-                param("count", "20").
+                spec(oauth1).
+                param("count", 0).
                 when().
-                get("https://api.twitter.com/1.1/statuses/home_timeline.json").
+                get("statuses/home_timeline.json").
                 then().log().body().
-                spec(timeSpec).spec(responseCode200);
+                spec(timeSpec);
     }
 }

@@ -11,20 +11,19 @@ import static org.hamcrest.Matchers.*;
 public class TestTwitPost extends BaseTest {
 
     String twitId;
-    String textToPublish = "This is posted as a part of Automation com.twitter.test.TestStatuses on " + new Date().toString();
+    String textToPublish = "This is posted as part of Automation Test executed on " + new Date().toString();
 
 
     @Test
     public void verifyTwitCreation(){
         Response response =
             given().
-                    auth().
-                    oauth(consumerKey,consumerSecret,accessToken,accessSecret).
+                    spec(oauth1).
                     queryParam("status", textToPublish).
                     when().
-                    post("/statuses/update.json").
+                    post("statuses/update.json").
                     then().
-                    log().body().
+                    log().ifValidationFails().
                     statusCode(200).
                     body("text", equalTo(textToPublish)).
                     extract().response();
@@ -35,13 +34,12 @@ public class TestTwitPost extends BaseTest {
     @Test(dependsOnMethods = "verifyTwitCreation")
     public void verifyDuplicatePrevention(){
                 given().
-                        auth().
-                        oauth(consumerKey,consumerSecret,accessToken,accessSecret).
+                        spec(oauth1).
                         queryParam("status", textToPublish).
                         when().
                         post("/statuses/update.json").
                         then().
-                        log().body().
+                        log().ifValidationFails().
                         statusCode(403).
                         root("errors").
                         body("code", hasItem(187)).
@@ -51,12 +49,11 @@ public class TestTwitPost extends BaseTest {
     @Test(dependsOnMethods = "verifyDuplicatePrevention")
     public void verifyTwitDeletion(){
                 given().
-                        auth().
-                        oauth(consumerKey,consumerSecret,accessToken,accessSecret).
+                        spec(oauth1).
                         when().
                         post("/statuses/destroy/"+ twitId + ".json").
                         then().
-                        log().all().
+                        log().ifValidationFails().
                         statusCode(200).
                         body("text", equalTo(textToPublish)).
                         body("id_str", equalTo(twitId));
