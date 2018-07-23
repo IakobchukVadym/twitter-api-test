@@ -17,26 +17,24 @@ public class TestTwitPost extends BaseTest {
     @Test
     public void verifyTwitCreation(){
         Response response =
-        given().
-                log().params().
-                auth().
-                oauth(consumerKey,consumerSecret,accessToken,accessSecret).
-                queryParam("status", textToPublish).
-                when().
-                post("/statuses/update.json").
-                then().
-                log().body().
-                statusCode(200).
-                body("text", equalTo(textToPublish)).
-                extract().response();
+            given().
+                    auth().
+                    oauth(consumerKey,consumerSecret,accessToken,accessSecret).
+                    queryParam("status", textToPublish).
+                    when().
+                    post("/statuses/update.json").
+                    then().
+                    log().body().
+                    statusCode(200).
+                    body("text", equalTo(textToPublish)).
+                    extract().response();
 
-        twitId = response.path("id_str");
+            twitId = response.path("id_str");
     }
 
     @Test(dependsOnMethods = "verifyTwitCreation")
     public void verifyDuplicatePrevention(){
                 given().
-                        log().params().
                         auth().
                         oauth(consumerKey,consumerSecret,accessToken,accessSecret).
                         queryParam("status", textToPublish).
@@ -53,7 +51,6 @@ public class TestTwitPost extends BaseTest {
     @Test(dependsOnMethods = "verifyDuplicatePrevention")
     public void verifyTwitDeletion(){
                 given().
-                        log().params().
                         auth().
                         oauth(consumerKey,consumerSecret,accessToken,accessSecret).
                         when().

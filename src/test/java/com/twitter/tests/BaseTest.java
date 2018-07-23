@@ -1,7 +1,9 @@
 package com.twitter.tests;
 
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeClass;
 
@@ -28,6 +30,7 @@ public class BaseTest {
             expectResponseTime(lessThanOrEqualTo(3000L), MILLISECONDS).
             build();
     protected ResponseSpecification responseCode200 = new ResponseSpecBuilder().expectStatusCode(200).build();
+    protected RequestSpecification oauth = new RequestSpecBuilder().setAuth().build()s
 
     private String baseURI = "https://api.twitter.com/1.1/";
 
