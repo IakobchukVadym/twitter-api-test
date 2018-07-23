@@ -1,3 +1,5 @@
+package com.twitter.tests;
+
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
@@ -11,22 +13,21 @@ import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.hamcrest.Matchers.lessThan;
 
-public class test extends BaseTest {
+public class TestStatuses extends BaseTest {
 
 
     @Test
     public void verifyLastTwit(){
-gi
+
         Response response =
         given().
-                log().params().
                 auth().
                 oauth(consumerKey,consumerSecret,accessToken,accessSecret).
                 param("count", 5).
                 when().
-                get("https://api.twitter.com/1.1/statuses/home_timeline.json").
+                get("/statuses/home_timeline.json").
                 then().
-                log().cookies().
+                log().all().
                 statusCode(200).
                 time(lessThan(1500L), MILLISECONDS).
                 extract().response();
