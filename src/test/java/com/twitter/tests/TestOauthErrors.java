@@ -4,11 +4,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 public class TestOauthErrors extends BaseTest {
 
-    int numberOfTwits = 5;
+    private int numberOfTwits = 5;
 
     @Test(dataProvider = "Authentication")
     public void verifyTwits(String a, String b, String c, String d, int code) {
@@ -16,7 +15,7 @@ public class TestOauthErrors extends BaseTest {
                 auth().oauth(a, b, c, d).
                 param("count", numberOfTwits).
                 when().
-                get(baseURI +"statuses/home_timeline.json").
+                get(baseURI + "statuses/home_timeline.json").
                 then().
                 log().ifValidationFails().
                 statusCode(code);
