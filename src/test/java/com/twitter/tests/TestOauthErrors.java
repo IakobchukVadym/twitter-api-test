@@ -4,29 +4,31 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static main.java.Common.CommonMethods.getRandomString;
 
 public class TestOauthErrors extends BaseTest {
 
-    private int numberOfTwits = 5;
+    //Genereate fault key which will be used for Authentication
+    String faultKey = getRandomString(18);
 
     @Test(dataProvider = "Authentication")
-    public void verifyTwits(String a, String b, String c, String d, int code) {
+    public void verifyResponseCodeForAuthentication(String consumerKey, String consumerSecret, String accessToken, String accessSecret, int statuseCode) {
         given().
-                auth().oauth(a, b, c, d).
-                param("count", numberOfTwits).
+                auth().oauth(consumerKey, consumerSecret, accessToken, accessSecret).
                 when().
                 get(baseURI + "statuses/home_timeline.json").
                 then().
                 log().ifValidationFails().
-                statusCode(code);
+                statusCode(statuseCode);
     }
 
     @DataProvider(name = "Authentication")
     public Object[][] credentials() {
         return new Object[][]{
-                {consumerKey, "123123243", "123123243", "123123243", 401},
-                {consumerKey, consumerSecret, "2311251235", "123123243", 401},
-                {consumerKey, consumerSecret, accessToken, "123123243", 401},
+                {faultKey, faultKey, faultKey, faultKey, 401},
+                {consumerKey, faultKey, faultKey, faultKey, 401},
+                {consumerKey, consumerSecret, faultKey, faultKey, 401},
+                {consumerKey, consumerSecret, accessToken, faultKey, 401},
                 {consumerKey, consumerSecret, accessToken, accessSecret, 200}
         };
     }

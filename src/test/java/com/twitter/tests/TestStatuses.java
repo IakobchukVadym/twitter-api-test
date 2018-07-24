@@ -2,7 +2,7 @@ package com.twitter.tests;
 
 import org.testng.annotations.Test;
 
-import static Common.CommonMethods.getRandInt;
+import static main.java.Common.CommonMethods.getRandInt;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -33,7 +33,6 @@ public class TestStatuses extends BaseTest {
                 param("count", 0).
                 when().
                 get("statuses/home_timeline.json").
-                then().log().body().
-                spec(timeSpec);
+                then().log().body();
     }
 }

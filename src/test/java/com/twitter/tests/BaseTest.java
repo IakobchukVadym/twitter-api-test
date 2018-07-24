@@ -1,13 +1,9 @@
 package com.twitter.tests;
 
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 
 import static io.restassured.RestAssured.oauth;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
 
 public class BaseTest {
     protected String consumerKey = "HQqWDhlNh48NJXGBVkLNsZILJ";
@@ -20,8 +16,4 @@ public class BaseTest {
     protected RequestSpecification oauth1 = new RequestSpecBuilder().setBaseUri(baseURI).
             setAuth(oauth(consumerKey, consumerSecret, accessToken, accessSecret)).build();
 
-
-    protected ResponseSpecification timeSpec = new ResponseSpecBuilder().
-            expectResponseTime(lessThanOrEqualTo(3000L), MILLISECONDS).
-            build();
 }

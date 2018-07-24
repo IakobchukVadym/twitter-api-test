@@ -12,7 +12,8 @@ import static org.hamcrest.Matchers.hasItem;
 public class TestTwitPost extends BaseTest {
 
     private String twitId;
-    private String textToPublish = "This is posted as part of Automation Test executed on " + new Date().toString();
+    //private String textToPublish = "This is posted as part of Automation Test executed on " + new Date().toString();
+    private String textToPublish = "Mashek - cwel" + new Date().toString();
 
 
     @Test
@@ -28,7 +29,6 @@ public class TestTwitPost extends BaseTest {
                         statusCode(200).
                         body("text", equalTo(textToPublish)).
                         extract().response();
-
         twitId = response.path("id_str");
     }
 
