@@ -1,5 +1,6 @@
 package com.twitter.tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static main.java.Common.CommonMethods.getRandInt;
@@ -35,4 +36,6 @@ public class TestStatuses extends BaseTest {
                 get("statuses/home_timeline.json").
                 then().log().body();
     }
+
+
 }
