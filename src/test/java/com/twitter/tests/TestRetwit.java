@@ -1,9 +1,11 @@
 package com.twitter.tests;
 
+import com.twitter.Common.BaseTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasItem;
 
 public class TestRetwit extends BaseTest {
 
@@ -21,49 +23,36 @@ public class TestRetwit extends BaseTest {
                         then().
                         statusCode(200).
                         extract().path("id_str[0]");
-
-        System.out.println(twitId);
-
     }
 
-    @Test
-    public void verifyRetwit() {
+    @Test(dataProvider = "RetwitOptions", dependsOnMethods = "getTwitId")
+    public void verifyRetwit(int statuscode) {
         given().
-                log().params().
                 spec(oauth1).
                 when().
                 post("statuses/retweet/" + twitId + ".json").
-                then().log().body().
+                then().
+                log().ifValidationFails().
+                statusCode(statuscode);
+    }
+
+    @Test(dependsOnMethods = "verifyRetwit")
+    public void verifyDeletionOfRetwit() {
+        given().
+                spec(oauth1).
+                when().
+                post("statuses/unretweet/" + twitId + ".json").
+                then().
+                //log().ifValidationFails().
+                log().ifValidationFails().
                 statusCode(200);
     }
 
-//    @Test
-//    public void verifyRetwitDiplicatePreve() {
-//        given().
-//                log().params().
-//                spec(oauth1).
-//                when().
-//                post("statuses/retweet/" + twitId + ".json").
-//                then().log().body().
-//                statusCode(200);
-//    }
-
-//    @Test
-//    public void verifyUntwit() {
-//        given().
-//                log().params().
-//                spec(oauth1).
-//                when().
-//                post("statuses/unretweet/" + twitId + ".json").
-//                then().log().body().
-//                statusCode(200);
-//    }
-
-    @DataProvider(name = "Retwit")
-    public Object[][] details() {
+    @DataProvider(name = "RetwitOptions")
+    public Object[][] codes() {
         return new Object[][]{
-                {"errors.code", 327, 200},
-                { 403}
+                {200},
+                {403}
         };
     }
 }

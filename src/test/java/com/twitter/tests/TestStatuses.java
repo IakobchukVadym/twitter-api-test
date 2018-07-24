@@ -1,11 +1,13 @@
 package com.twitter.tests;
 
-import org.testng.annotations.DataProvider;
+import com.twitter.Common.BaseTest;
 import org.testng.annotations.Test;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static main.java.Common.CommonMethods.getRandInt;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
 
 public class TestStatuses extends BaseTest {
 
@@ -13,9 +15,8 @@ public class TestStatuses extends BaseTest {
     int numberOfTwits = getRandInt(1, 10);
 
     @Test
-    public void verifyTwits() {
+    public void verifyTimeline() {
         given().
-                log().params().
                 spec(oauth1).
                 param("count", numberOfTwits).
                 when().
@@ -29,13 +30,11 @@ public class TestStatuses extends BaseTest {
     @Test
     public void veifyResponseTime() {
         given().
-                log().params().
                 spec(oauth1).
-                param("count", 0).
+                param("count", 1).
                 when().
                 get("statuses/home_timeline.json").
-                then().log().body();
+                then().
+                time(lessThanOrEqualTo(3000L), MILLISECONDS);
     }
-
-
 }

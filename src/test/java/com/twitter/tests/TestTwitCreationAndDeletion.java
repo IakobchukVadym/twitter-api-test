@@ -1,5 +1,6 @@
 package com.twitter.tests;
 
+import com.twitter.Common.BaseTest;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 

@@ -1,4 +1,4 @@
-package com.twitter.tests;
+package com.twitter.Common;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -15,5 +15,4 @@ public class BaseTest {
 
     protected RequestSpecification oauth1 = new RequestSpecBuilder().setBaseUri(baseURI).
             setAuth(oauth(consumerKey, consumerSecret, accessToken, accessSecret)).build();
-
 }

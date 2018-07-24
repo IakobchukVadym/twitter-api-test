@@ -1,5 +1,6 @@
 package com.twitter.tests;
 
+import com.twitter.Common.BaseTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
