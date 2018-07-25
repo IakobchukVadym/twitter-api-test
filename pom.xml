@@ -56,6 +56,12 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <properties>
+                        <property>
+                            <name>surefire.testng.verbose</name>
+                            <value>7</value>
+                        </property>
+                    </properties>
                     <parallel>methods</parallel>
                     <threadCount>10</threadCount>
                 </configuration>
