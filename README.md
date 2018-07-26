@@ -22,7 +22,7 @@ For deleting docker image run in terminal:
 sh ./delete_docker_image.sh
 ```
 
-## How to run tests in localy
+## How to run tests localy
 
 Simply run in terminal:
 ```
