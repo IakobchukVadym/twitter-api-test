@@ -1,13 +1,13 @@
-package main.java.Common;
+package com.twitter.common;
 
 import java.security.SecureRandom;
 
 public class CommonMethods {
 
-    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    static SecureRandom rnd = new SecureRandom();
+    private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static SecureRandom rnd = new SecureRandom();
 
-    public static String getRandomString( int len ){
+    public static String getRandomString(int len){
         StringBuilder sb = new StringBuilder( len );
         for( int i = 0; i < len; i++ )
             sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
@@ -15,7 +15,6 @@ public class CommonMethods {
     }
 
     public static int getRandInt(int min, int max) {
-        int i = min + (int) (Math.random() * ((max - min) + 1));
-        return i;
+        return min + (int) (Math.random() * ((max - min) + 1));
     }
 }

@@ -1,21 +1,19 @@
 package com.twitter.tests;
 
-import com.twitter.Common.BaseTest;
+import com.twitter.common.BaseTest;
 import org.testng.annotations.Test;
 
+import static com.twitter.common.CommonMethods.getRandInt;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static main.java.Common.CommonMethods.getRandInt;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
 
 public class TestStatuses extends BaseTest {
 
-    //Generate random number of twits to return in test
-    int numberOfTwits = getRandInt(1, 10);
-
     @Test
     public void verifyTimeline() {
+        int numberOfTwits = getRandInt(1, 10);
         given().
                 spec(oauth1).
                 param("count", numberOfTwits).
@@ -28,7 +26,7 @@ public class TestStatuses extends BaseTest {
     }
 
     @Test
-    public void veifyResponseTime() {
+    public void verifyResponseTime() {
         given().
                 spec(oauth1).
                 param("count", 1).

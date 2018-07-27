@@ -1,19 +1,23 @@
 package com.twitter.tests;
 
-import com.twitter.Common.BaseTest;
+import com.twitter.common.BaseTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static main.java.Common.CommonMethods.getRandomString;
+import static com.twitter.common.CommonMethods.getRandomString;
 
 public class TestOauthErrors extends BaseTest {
 
     //Genereate fault key which will be used for Authentication
-    String faultKey = getRandomString(18);
+    private String faultKey = getRandomString(18);
 
     @Test(dataProvider = "Authentication")
-    public void verifyResponseCodeForAuthentication(String consumerKey, String consumerSecret, String accessToken, String accessSecret, int statuseCode) {
+    public void verifyResponseCodeForAuthentication(String consumerKey,
+                                                    String consumerSecret,
+                                                    String accessToken,
+                                                    String accessSecret,
+                                                    int statuseCode) {
         given().
                 auth().oauth(consumerKey, consumerSecret, accessToken, accessSecret).
                 when().

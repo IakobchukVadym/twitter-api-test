@@ -1,4 +1,4 @@
-package com.twitter.Common;
+package com.twitter.common;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
