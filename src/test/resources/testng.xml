@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="allTests" verbose="1">
+<suite name="Twitter tests" verbose="1" parallel="classes" thread-count="4">
     <test name="test">
         <packages>
             <package name="com.twitter.tests"/>
