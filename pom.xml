@@ -11,34 +11,6 @@
         <aspectj.version>1.8.10</aspectj.version>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>prod</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <property>
-                    <name>env</name>
-                    <value>prod</value>
-                </property>
-            </activation>
-            <properties>
-                <consumer.key>
-                    mwMMgHnAQFkOnYj35D2rLrYGw3O0HEhLIscifp8dx+FfOPVevzNteQ==
-                </consumer.key>
-                <consumer.secret>
-                    4xUDsCPsXCsYkN3X1Zp1SZz73QirhoZMDHYTaPh7stKxxcKdqKTa9VHrr25vq2eJdooBvncYBLTL8h5bFq4OGA==
-                </consumer.secret>
-                <access.token>
-                    8WEx6x6giPH07RBQqz09Rf8JKnxyIpA2EvRU3zXUprTtvjrNwUtdIdSn6qaLq5qc/Vz0wadfDGQpvqsWvQixrQ==
-                </access.token>
-                <access.secret>
-                    2T6S+0krElzJClcrc8yidiwhBVjHquVFM+3vQMbkknotZ1+d/0K+iFk48C+jWeG9n8WzV6S18Xs=
-                </access.secret>
-                <url>https://api.twitter.com/1.1/</url>
-            </properties>
-        </profile>
-    </profiles>
-
     <dependencies>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -102,14 +74,6 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <systemPropertyVariables>
-                        <consumer.key>${consumer.key}</consumer.key>
-                        <consumer.secret>${consumer.secret}</consumer.secret>
-                        <access.token>${access.token}</access.token>
-                        <access.secret>${access.secret}</access.secret>
-                        <security.password>api</security.password>
-                        <url>${url}</url>
-                    </systemPropertyVariables>
                     <workingDirectory>target</workingDirectory>
                 </configuration>
                 <dependencies>
