@@ -26,5 +26,5 @@ sh ./delete_docker_image.sh
 
 Simply run in terminal:
 ```
-mvn clean test
+mvn clean test -Denv=prod
 ```
