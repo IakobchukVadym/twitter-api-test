@@ -1,4 +1,4 @@
-package com.twitter.model.exception;
+package com.twitter.model.response.exception;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,6 +1,6 @@
 package com.twitter.utils;
 
-import com.twitter.clients.StatusClient;
+import com.twitter.client.StatusClient;
 import com.twitter.service.StatusService;
 
 public abstract class BaseTest {

@@ -1,6 +1,6 @@
 package com.twitter.tests;
 
-import com.twitter.model.exception.TwitterError;
+import com.twitter.model.response.exception.TwitterError;
 import com.twitter.request.RqBuilder;
 import com.twitter.utils.BaseTest;
 import com.twitter.utils.assertions.TwitterSoftAssertions;
@@ -14,27 +14,26 @@ import java.util.Date;
 
 import static com.twitter.ResponseWrapper.createTwitterError;
 import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
+import static com.twitter.utils.assertions.StatusAssert.assertThat;
 
-public class TwitTest extends BaseTest {
+public class TweetTest extends BaseTest {
 
     @Test
-    public void verifyTwitCreation() {
-        String postText = "verifyTwitCreation test post" + new Date().toString();
+    public void verifyTweetCreation() {
+        String postText = "verifyTweetCreation test post " + new Date().toString();
         RequestSpecification spec = new RqBuilder()
                 .withStatus(postText)
                 .build();
 
-        Status status = statusService.createTwit(spec);
+        Status status = statusService.createTweet(spec);
 
-        Assertions.assertThat(status.getText())
-                .as("Created twit message should be the same as provided")
-                .isEqualTo(postText);
+        assertThat(status).hasText(postText);
     }
 
     @Test
     public void verifyDuplicatePrevention() {
         RequestSpecification spec = new RqBuilder()
-                .withStatus("verifyDuplicatePrevention test post" + new Date().toString())
+                .withStatus("verifyDuplicatePrevention test post " + new Date().toString())
                 .build();
 
         statusClient.postTwit(spec);
@@ -54,15 +53,14 @@ public class TwitTest extends BaseTest {
     }
 
     @Test
-    public void verifyTwitDeletion() {
+    public void verifyTweetDeletion() {
         RequestSpecification spec = new RqBuilder()
-                .withStatus("verifyTwitDeletion test post" + new Date().toString())
+                .withStatus("verifyTweetDeletion test post " + new Date().toString())
                 .build();
 
-        Status statusCreated = statusService.createTwit(spec);
-        long id = statusCreated.getId();
+        Status statusCreated = statusService.createTweet(spec);
 
-        Status statusDeleted = statusService.removeTwit(spec, id);
+        Status statusDeleted = statusService.removeTweet(spec, statusCreated.getId());
         Assertions.assertThat(statusDeleted)
                 .isEqualByComparingTo(statusCreated);
     }

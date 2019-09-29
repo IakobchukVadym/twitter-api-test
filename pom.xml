@@ -139,47 +139,6 @@
                 <version>2.9</version>
             </plugin>
 
-            <!--<plugin>-->
-            <!--<groupId>org.assertj</groupId>-->
-            <!--<artifactId>assertj-assertions-generator-maven-plugin</artifactId>-->
-            <!--<version>${assertj.version}</version>-->
-
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<goals>-->
-            <!--<goal>generate-assertions</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-
-            <!--<configuration>-->
-            <!--<packages>-->
-            <!--<param>com.twitter.model.exception</param>-->
-            <!--</packages>-->
-
-            <!--&lt;!&ndash;<hierarchical>true</hierarchical>&ndash;&gt;-->
-            <!--<generateAssertionsForAllFields>true</generateAssertionsForAllFields>-->
-            <!--<generateAssertions>false</generateAssertions>-->
-            <!--<generateBddAssertions>false</generateBddAssertions>-->
-            <!--<generateSoftAssertions>true</generateSoftAssertions>-->
-            <!--<generateJUnitSoftAssertions>false</generateJUnitSoftAssertions>-->
-
-
-            <!--<targetDir>src/main/java/com/twitter/utils</targetDir>-->
-            <!--&lt;!&ndash;<targetDir>src/test/generated-assertions</targetDir>&ndash;&gt;-->
-            <!--<generateAssertionsInPackage>com.twitter.utils.generated</generateAssertionsInPackage>-->
-
-
-            <!--</configuration>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>org.assertj</groupId>-->
-            <!--<artifactId>assertj-core</artifactId>-->
-            <!--<version>${assertj.version}</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--</plugin>-->
-
         </plugins>
     </build>
 

@@ -2,7 +2,7 @@ package com.twitter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twitter.model.exception.TwitterError;
+import com.twitter.model.response.exception.TwitterError;
 import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 import twitter4j.Status;
