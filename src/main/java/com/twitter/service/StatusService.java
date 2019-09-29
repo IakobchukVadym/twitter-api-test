@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 import static com.twitter.ResponseWrapper.createStatus;
 import static com.twitter.ResponseWrapper.createTwitterError;
-import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
+import static com.twitter.utils.assertions.ResponseAssert.assertResponseCode;
 
 @Log4j2
 public class StatusService {

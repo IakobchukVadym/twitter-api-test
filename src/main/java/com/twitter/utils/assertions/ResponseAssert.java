@@ -3,8 +3,8 @@ package com.twitter.utils.assertions;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 
-public class AssertResponse {
-    private AssertResponse() {
+public class ResponseAssert {
+    private ResponseAssert() {
     }
 
     public static void assertResponseCode(Response response, int code) {

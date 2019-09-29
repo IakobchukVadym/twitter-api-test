@@ -13,7 +13,7 @@ import twitter4j.Status;
 import java.util.Date;
 
 import static com.twitter.ResponseWrapper.createTwitterError;
-import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
+import static com.twitter.utils.assertions.ResponseAssert.assertResponseCode;
 import static com.twitter.utils.assertions.StatusAssert.assertThat;
 
 public class TweetTest extends BaseTest {

@@ -11,7 +11,7 @@ import java.util.List;
 
 import static com.twitter.request.ScreenName.ARSENAL;
 import static com.twitter.utils.CommonMethods.getRandInt;
-import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
+import static com.twitter.utils.assertions.ResponseAssert.assertResponseCode;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TimelineTest extends BaseTest {

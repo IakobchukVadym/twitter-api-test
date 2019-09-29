@@ -14,7 +14,7 @@ import static com.twitter.properties.AppProperties.BASE_URL;
 import static com.twitter.properties.AppProperties.CONSUMER_KEY;
 import static com.twitter.properties.AppProperties.CONSUMER_SECRET;
 import static com.twitter.utils.CommonMethods.getRandomString;
-import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
+import static com.twitter.utils.assertions.ResponseAssert.assertResponseCode;
 import static io.restassured.RestAssured.given;
 
 public class OauthErrorsTest extends BaseTest {
