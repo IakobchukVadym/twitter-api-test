@@ -21,10 +21,10 @@ public class ClearTimeLine extends BaseTest {
 
         List<Status> statuses = statusService.retrieveUserTimeline(spec);
 
-        statuses.forEach(twit -> {
-            log.info("deleted twit id is " + twit.getId());
-            log.info("deleted twit text is " + twit.getText());
-            statusClient.deleteTwit(spec, twit.getId());
+        statuses.forEach(satus -> {
+            log.info("deleted tweet id is " + satus.getId());
+            log.info("deleted tweet text is " + satus.getText());
+            statusClient.deleteTwit(spec, satus.getId());
         });
     }
 }

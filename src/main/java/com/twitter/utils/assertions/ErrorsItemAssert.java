@@ -1,6 +1,6 @@
 package com.twitter.utils.assertions;
 
-import com.twitter.model.exception.ErrorsItem;
+import com.twitter.model.response.exception.ErrorsItem;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 

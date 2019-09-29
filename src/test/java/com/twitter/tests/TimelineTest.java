@@ -9,6 +9,7 @@ import twitter4j.Status;
 
 import java.util.List;
 
+import static com.twitter.request.ScreenName.ARSENAL;
 import static com.twitter.utils.CommonMethods.getRandInt;
 import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ public class TimelineTest extends BaseTest {
         List<Status> statuses = statusService.retrieveHomeTimeline(spec);
 
         assertThat(statuses.size())
-                .as("Number of twits should be the same as requested")
+                .as("Number of tweets should be the same as requested")
                 .isEqualTo(randInt);
     }
 
@@ -34,14 +35,13 @@ public class TimelineTest extends BaseTest {
         int randInt = getRandInt(100);
         RequestSpecification spec = new RqBuilder()
                 .withCount(randInt)
-                .withScreenName("Arsenal")
-                .withExcludeReplies(true)
+                .withScreenName(ARSENAL.getName())
                 .build();
 
         List<Status> statuses = statusService.retrieveUserTimeline(spec);
 
         assertThat(statuses.size())
-                .as("Number of twits should be the same as requested")
+                .as("Number of tweets should be the same as requested")
                 .isEqualTo(randInt);
     }
 

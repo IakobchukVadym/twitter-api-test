@@ -1,9 +1,11 @@
 package com.twitter.service;
 
 import com.twitter.ResponseWrapper;
-import com.twitter.clients.StatusClient;
+import com.twitter.client.StatusClient;
+import com.twitter.model.response.exception.TwitterError;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import lombok.extern.log4j.Log4j2;
 import twitter4j.Status;
 
 import java.util.List;
@@ -11,62 +13,64 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.twitter.ResponseWrapper.createStatus;
+import static com.twitter.ResponseWrapper.createTwitterError;
 import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
 
+@Log4j2
 public class StatusService {
     private StatusClient statusClient = new StatusClient();
 
-    public Status createTwit(RequestSpecification spec) {
+    public Status createTweet(RequestSpecification spec) {
         Response response = statusClient.postTwit(spec);
-        assertResponseCode(response, 200);
+        assertAndLogIfError(response);
 
         return getStatus(response);
     }
 
-    public Status removeTwit(RequestSpecification spec, long id) {
+    public Status removeTweet(RequestSpecification spec, long id) {
         Response response = statusClient.deleteTwit(spec, id);
-        assertResponseCode(response, 200);
-
+        assertAndLogIfError(response);
         return getStatus(response);
     }
 
-    public Status createRetwit(RequestSpecification spec, long id) {
+    public Status createRetweet(RequestSpecification spec, long id) {
         Response response = statusClient.postRetwit(spec, id);
-        assertResponseCode(response, 200);
+        assertAndLogIfError(response);
 
         return getStatus(response);
     }
 
-    public Status removeRetwit(RequestSpecification spec, long id) {
+    public Status removeRetweet(RequestSpecification spec, long id) {
         Response response = statusClient.deleteRetwit(spec, id);
-        assertResponseCode(response, 200);
+        assertAndLogIfError(response);
 
         return getStatus(response);
     }
 
     public List<Status> retrieveHomeTimeline(RequestSpecification spec) {
         Response response = statusClient.getHomeTimeline(spec);
-        assertResponseCode(response, 200);
+        assertAndLogIfError(response);
 
         return getStatuses(response);
     }
 
     public List<Status> retrieveUserTimeline(RequestSpecification spec) {
         Response response = statusClient.getUserTimeline(spec);
-        assertResponseCode(response, 200);
+        assertAndLogIfError(response);
 
         return getStatuses(response);
     }
 
     public List<Status> retrieveMentionTimeline(RequestSpecification spec) {
         Response response = statusClient.getMentionTimeline(spec);
-        assertResponseCode(response, 200);
+        assertAndLogIfError(response);
 
         return getStatuses(response);
     }
 
     private Status getStatus(Response response) {
         String json = response.getBody().asString();
+
         return createStatus(json);
     }
 
@@ -76,5 +80,14 @@ public class StatusService {
         return jsons.stream()
                 .map(ResponseWrapper::createStatus)
                 .collect(Collectors.toList());
+    }
+
+    private void assertAndLogIfError(Response response) {
+        int expectedCode = 200;
+        if (response.getStatusCode() != expectedCode) {
+            TwitterError twitterError = createTwitterError(response);
+            log.error("Twitter has sent following errors " + twitterError);
+        }
+        assertResponseCode(response, expectedCode);
     }
 }

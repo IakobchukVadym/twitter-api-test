@@ -1,6 +1,6 @@
 package com.twitter.tests;
 
-import com.twitter.model.exception.TwitterError;
+import com.twitter.model.response.exception.TwitterError;
 import com.twitter.utils.BaseTest;
 import com.twitter.utils.assertions.TwitterSoftAssertions;
 import io.restassured.response.Response;
@@ -9,10 +9,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.twitter.ResponseWrapper.createTwitterError;
-import static com.twitter.properties.AppProperties.getUrl;
-import static com.twitter.request.RqBuilder.ACCESS_TOKEN;
-import static com.twitter.request.RqBuilder.CONSUMER_KEY;
-import static com.twitter.request.RqBuilder.CONSUMER_SECRET;
+import static com.twitter.properties.AppProperties.ACCESS_TOKEN;
+import static com.twitter.properties.AppProperties.BASE_URL;
+import static com.twitter.properties.AppProperties.CONSUMER_KEY;
+import static com.twitter.properties.AppProperties.CONSUMER_SECRET;
 import static com.twitter.utils.CommonMethods.getRandomString;
 import static com.twitter.utils.assertions.AssertResponse.assertResponseCode;
 import static io.restassured.RestAssured.given;
@@ -23,7 +23,7 @@ public class OauthErrorsTest extends BaseTest {
     private static final int AUTHENTICATE_ERROR_CODE = 32;
     private static final String TOKEN_ERROR_MESSAGE = "Invalid or expired token.";
     private static final String AUTHENTICATE_ERROR_MESSAGE = "Could not authenticate you.";
-    private static final String faultKey = getRandomString(18);
+    private static final String FAULT_KEY = getRandomString(18);
 
     @Test(dataProvider = "Authentication")
     public void verifyResponseCodeForAuthentication(String consumerKey, String consumerSecret, String accessToken,
@@ -32,7 +32,7 @@ public class OauthErrorsTest extends BaseTest {
         RequestSpecification spec = given()
                 .auth()
                 .oauth(consumerKey, consumerSecret, accessToken, accessSecret)
-                .baseUri(getUrl());
+                .baseUri(BASE_URL);
 
         Response response = statusClient.getHomeTimeline(spec);
         assertResponseCode(response, statusCode);
@@ -49,10 +49,10 @@ public class OauthErrorsTest extends BaseTest {
     @DataProvider(name = "Authentication", parallel = true)
     public Object[][] credentials() {
         return new Object[][]{
-                {faultKey, faultKey, faultKey, faultKey, 401, TOKEN_ERROR_CODE, TOKEN_ERROR_MESSAGE},
-                {CONSUMER_KEY, faultKey, faultKey, faultKey, 401, TOKEN_ERROR_CODE, TOKEN_ERROR_MESSAGE},
-                {CONSUMER_KEY, CONSUMER_SECRET, faultKey, faultKey, 401, TOKEN_ERROR_CODE, TOKEN_ERROR_MESSAGE},
-                {CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, faultKey, 401, AUTHENTICATE_ERROR_CODE, AUTHENTICATE_ERROR_MESSAGE}
+                {FAULT_KEY, FAULT_KEY, FAULT_KEY, FAULT_KEY, 401, TOKEN_ERROR_CODE, TOKEN_ERROR_MESSAGE},
+                {CONSUMER_KEY, FAULT_KEY, FAULT_KEY, FAULT_KEY, 401, TOKEN_ERROR_CODE, TOKEN_ERROR_MESSAGE},
+                {CONSUMER_KEY, CONSUMER_SECRET, FAULT_KEY, FAULT_KEY, 401, TOKEN_ERROR_CODE, TOKEN_ERROR_MESSAGE},
+                {CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, FAULT_KEY, 401, AUTHENTICATE_ERROR_CODE, AUTHENTICATE_ERROR_MESSAGE}
         };
     }
 }

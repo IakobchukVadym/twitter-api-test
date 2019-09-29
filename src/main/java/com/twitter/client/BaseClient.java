@@ -1,11 +1,11 @@
-package com.twitter.clients;
+package com.twitter.client;
 
 import com.google.common.collect.ImmutableMap;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.log4j.Log4j2;
 
-import static com.twitter.properties.AppProperties.getUrl;
+import static com.twitter.properties.AppProperties.BASE_URL;
 
 @Log4j2
 public abstract class BaseClient {
@@ -31,6 +31,6 @@ public abstract class BaseClient {
 
     private void logRequest(String method, String endpoint, int code) {
         log.info(String.format("Sending %s request to %s" + "\n Response code: %s ",
-                method, getUrl() + endpoint, code));
+                method, BASE_URL + endpoint, code));
     }
 }
