@@ -2,4 +2,7 @@
 .gitignore
 target/
 .DS_Store
-README.md
+# Intellij
+.idea/
+*.iml
+*.iws

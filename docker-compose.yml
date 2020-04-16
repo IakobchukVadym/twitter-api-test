@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  mvn:
+    image: "maven:3.5.4-jdk-8-alpine"
+    container_name: api-mvn-test
+    volumes:
+      - maven-repo:/root/.m2
+      - ./:/app
+    working_dir: /app
+    entrypoint: ["mvn", "clean", "test"]
+
+  allure:
+    image: "frankescobar/allure-docker-service"
+    container_name: api-allure-test
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 1
+      KEEP_HISTORY: "TRUE"
+    ports:
+      - "4040:4040"
+      - "5050:5050"
+    volumes:
+      - ./allure-results:/app/allure-results
+
+volumes:
+  maven-repo:
