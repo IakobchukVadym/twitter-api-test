@@ -1,8 +1,33 @@
 #!/usr/bin/env bash
 
-if [ ! "$(docker images -a | grep api-test-docker)" ]; then
-    echo "Building image"
-    docker build --tag api-test-docker .
-fi
+param=$1
 
-docker run -it --rm --name my-maven-project -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven api-test-docker:latest mvn clean -Denv=prod -Dmaven.clean.failOnError=false test
+composeUp(){
+    if [[ $param == "rebuild" ]];
+        then
+            docker-compose up -d --build
+            echo "Rebuilding image with tests and starting docker compose"
+        else
+            docker-compose up -d
+            echo "Starting docker compose"
+    fi
+}
+
+checkTests() {
+    while [ "$(docker ps | grep api-mvn-test)" ]
+        do
+            echo "Tests are running..."
+            sleep 7
+        done
+     echo Allure report is available on http://localhost:4040
+}
+
+if [ ! "$(docker ps | grep api-allure-test)" ]
+then
+    composeUp
+    checkTests
+else
+    docker start api-mvn-test
+    echo "Starting api-mvn-test container"
+    checkTests
+fi
