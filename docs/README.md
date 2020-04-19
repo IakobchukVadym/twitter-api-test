@@ -8,29 +8,37 @@
 - [AssertJ](https://joel-costigliola.github.io/assertj/)
 - [Allure](http://allure.qatools.ru/)
 - [Docker](https://www.docker.com/)
+- [Docker Compose](https://github.com/docker/compose)
 
 
-### There are 2 ways to run tests in this Project:
+## There are 2 ways to run tests in this Project:
 
-#### 1. Run tests localy
+
+#### 1. Run tests in docker
+Build docker image and start containers with command in terminal:
+
+```
+./run_docker.sh
+```
+
+Stop and remove containers with command in terminal:
+```
+docker-compose down
+```
+
+Rebuild image (after changes in src or POM.xml) and start containers with command in terminal:
+```
+./run_docker.sh rebuild
+```
+
+Check Allure report on http://localhost:4040
+
+#### 2. Run tests localy
 
 Run command in terminal:
 
 ```
 mvn clean test
-```
-
-#### 2. Run tests in docker
-
-For building new docker image and start tests run command in terminal:
-
-```
-sh ./run_docker.sh
-```
-
-For deleting docker image run command in terminal:
-```
-sh ./delete_docker_image.sh
 ```
 
 ### Reporting
