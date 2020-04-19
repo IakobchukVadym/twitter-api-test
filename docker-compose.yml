@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  mvn:
+    image: api-mvn:latest
+    build: .
+    container_name: api-mvn-test
+    networks:
+      - api-test
+    volumes:
+      - maven-repo:/root/.m2
+      - allure-results:/app/target/allure-results
+    working_dir: /app
+    entrypoint: ["mvn", "clean", "-Dmaven.clean.failOnError=falsepwd", "test"]
+
+  allure:
+    image: "frankescobar/allure-docker-service"
+    container_name: api-allure-test
+    networks:
+      - api-test
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: 1
+      KEEP_HISTORY: "TRUE"
+    ports:
+      - "4040:4040"
+      - "5050:5050"
+    volumes:
+      - allure-results:/app/allure-results
+
+volumes:
+  maven-repo:
+  allure-results:
+
+networks:
+  api-test:
+    name: api-test-network

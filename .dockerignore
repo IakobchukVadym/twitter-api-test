@@ -2,4 +2,5 @@
 .gitignore
 target/
 .DS_Store
+.idea/
 README.md
